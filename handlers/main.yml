@@ -1,0 +1,6 @@
+---
+
+- name: Restart blynk-server
+  service:
+    name: blynk-server
+    state: restarted

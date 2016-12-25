@@ -1,0 +1,2 @@
+__blynk-server_db_dir: /var/db/blynk-server
+__blynk-server_conf_dir: /usr/local/etc/blynk-server

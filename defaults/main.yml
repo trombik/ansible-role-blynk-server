@@ -1,0 +1,8 @@
+blynk-server_user: blynk-server
+blynk-server_group: blynk-server
+blynk-server_log_dir: /var/log/blynk-server
+blynk-server_db_dir: "{{ __blynk-server_db_dir }}"
+blynk-server_service: blynk-server
+blynk-server_conf_dir: "{{ __blynk-server_conf_dir }}"
+blynk-server_conf_file: "{{ __blynk-server_conf_dir }}/blynk-server.conf"
+blynk-server_flags: ""

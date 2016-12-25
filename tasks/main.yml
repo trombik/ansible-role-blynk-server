@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-role-blynk-server
+
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: "install-{{ ansible_os_family }}.yml"
+
+- name: Create log directory
+  file:
+    path: "{{ blynk-server_log_dir }}"
+    mode: 0755
+    owner: "{{ blynk-server_user }}"
+    group: "{{ blynk-server_group }}"
+    state: directory
+  notify: Restart blynk-server
+
+- name: Create db directory
+  file:
+    path: "{{ blynk-server_db_dir }}"
+    mode: 0755
+    owner: "{{ blynk-server_user }}"
+    group: "{{ blynk-server_group }}"
+    state: directory
+  notify: Restart blynk-server
+
+- name: Create blynk-server.conf
+  template:
+    src: blynk-server.conf.j2
+    dest: "{{ blynk-server_conf_file }}"
+    validate: echo %s
+  notify: Restart blynk-server
+
+- name: Start blynk-server
+  service:
+    name: "{{ blynk-server_service }}"
+    enabled: true
+    state: started

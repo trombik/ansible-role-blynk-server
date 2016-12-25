@@ -1,0 +1,6 @@
+---
+
+- name: Install blynk-server
+  pkgng:
+    name: blynk-server
+    state: present
