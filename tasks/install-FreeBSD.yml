@@ -28,6 +28,11 @@
     dest: /usr/local/etc/rc.d/blynk
     mode: 0755
 
+- name: Install x11/libXrender
+  pkgng:
+    name: x11/libXrender
+    state: present
+
 - name: Install blynk server
   get_url:
     url: "{{ blynk_server_dist_url }}"

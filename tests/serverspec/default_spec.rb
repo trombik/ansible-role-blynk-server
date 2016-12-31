@@ -3,7 +3,7 @@ require 'serverspec'
 
 package = 'blynk'
 service = 'blynk'
-config  = '/etc/blynk/server.properties'
+config_dir = "/etc/blynk"
 user    = 'blynk'
 group   = 'blynk'
 ports   = [
@@ -23,11 +23,15 @@ bin     = "#{ home_dir }/server.jar"
 
 case os[:family]
 when 'freebsd'
-  config = '/usr/local/etc/blynk/server.properties'
+  config_dir = "/usr/local/etc/blynk"
   db_dir = '/var/db/blynk'
   user   = "www"
   group  = "www"
 end
+
+config  = "#{ config_dir }/server.properties"
+cert    = "#{ config_dir }/cert.pem"
+key     = "#{ config_dir }/key.pem"
 
 describe file(home_dir) do
   it { should be_directory }
@@ -44,6 +48,17 @@ describe file(config) do
   it { should be_file }
 end
 
+describe file(cert) do
+  it { should be_file }
+  it { should be_mode 644 }
+end
+
+describe file(key) do
+  it { should be_file }
+  it { should be_mode 640 }
+  it { should be_grouped_into group }
+end
+
 describe file(log_dir) do
   it { should exist }
   it { should be_mode 755 }
@@ -56,6 +71,12 @@ describe file(db_dir) do
   it { should be_mode 755 }
   it { should be_owned_by user }
   it { should be_grouped_into group }
+end
+
+%w[ blynk.log postgres.log stats.log worker.log ].each do |f|
+  describe file("#{ log_dir }/#{f}") do
+    it { should be_file }
+  end
 end
 
 =begin

@@ -4,7 +4,7 @@
   service:
     name: "{{ blynk_server_service }}"
     state: restarted
-  notify: Wait for blynk to start
+  notify: Wait for blynk to start in handler
 
 - name: Wait for blynk to start in handler
   wait_for:
