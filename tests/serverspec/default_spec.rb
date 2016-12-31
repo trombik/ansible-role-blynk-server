@@ -58,6 +58,12 @@ describe file(db_dir) do
   it { should be_grouped_into group }
 end
 
+%w[ blynk.log postgres.log stats.log worker.log ].each do |f|
+  describe file("#{ log_dir }/#{f}") do
+    it { should be_file }
+  end
+end
+
 =begin
 case os[:family]
 when 'freebsd'
