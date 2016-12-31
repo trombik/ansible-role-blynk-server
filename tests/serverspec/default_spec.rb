@@ -98,3 +98,13 @@ ports.each do |p|
     it { should be_listening }
   end
 end
+
+describe command("echo '' | openssl s_client -connect 127.0.0.1:7443") do
+  its(:stdout) { should match(/^CONNECTED\(\d+\)$/) }
+  its(:stdout) { should match(/^Server public key is 2048 bit$/) }
+  its(:stdout) { should match(/^\s+Protocol\s+:\s+TLSv1\.2$/) }
+  its(:stdout) { should match(/^MIIDhTCCAm2gAwIBAgIJANoweLcD5utMMA0GCSqGSIb3DQEBCwUAMFkxCzAJBgNV$/) }
+
+  its(:stderr) { should match(/^depth=0 C = AU, ST = Some-State, O = Internet Widgits Pty Ltd, CN = localhost$/) }
+  its(:stderr) { should match(/^verify error:num=18:self signed certificate$/) }
+end
