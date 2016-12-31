@@ -8,6 +8,21 @@
 
 - include: "install-{{ ansible_os_family }}.yml"
 
+- name: Create TLS cert
+  template:
+    src: tls_cert.j2 
+    dest: "{{ blynk_server_config_merged['server.ssl.cert'] }}"
+    mode: 0644
+  notify: Restart blynk
+
+- name: Create TLS key
+  template:
+    src: tls_key.j2 
+    dest: "{{ blynk_server_config_merged['server.ssl.key'] }}"
+    mode: 0640
+    group: "{{ blynk_server_group }}"
+  notify: Restart blynk
+
 - name: Create log directory
   file:
     path: "{{ blynk_server_config_merged['logs.folder'] }}"

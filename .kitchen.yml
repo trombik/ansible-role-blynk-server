@@ -36,6 +36,9 @@ platforms:
 
 suites:
   - name: default
+    driver:
+      network:
+        - [ "private_network", { ip: "192.168.22.100" } ]
     provisioner:
       name: ansible_playbook
       playbook: tests/serverspec/default.yml
