@@ -3,35 +3,45 @@
 
 - include_vars: "{{ ansible_os_family }}.yml"
 
+- set_fact:
+    blynk_server_config_merged: "{{ blynk_server_config_default | combine(blynk_server_config, recursive = True) }}"
+
 - include: "install-{{ ansible_os_family }}.yml"
 
 - name: Create log directory
   file:
-    path: "{{ blynk-server_log_dir }}"
+    path: "{{ blynk_server_config_merged['logs.folder'] }}"
     mode: 0755
-    owner: "{{ blynk-server_user }}"
-    group: "{{ blynk-server_group }}"
+    owner: "{{ blynk_server_user }}"
+    group: "{{ blynk_server_group }}"
     state: directory
-  notify: Restart blynk-server
+  notify: Restart blynk
 
 - name: Create db directory
   file:
-    path: "{{ blynk-server_db_dir }}"
+    path: "{{ blynk_server_config_merged['data.folder'] }}"
     mode: 0755
-    owner: "{{ blynk-server_user }}"
-    group: "{{ blynk-server_group }}"
+    owner: "{{ blynk_server_user }}"
+    group: "{{ blynk_server_group }}"
     state: directory
-  notify: Restart blynk-server
+  notify: Restart blynk
 
-- name: Create blynk-server.conf
+- name: Create server.properties
   template:
-    src: blynk-server.conf.j2
-    dest: "{{ blynk-server_conf_file }}"
-    validate: echo %s
-  notify: Restart blynk-server
+    src: server.properties.j2
+    dest: "{{ blynk_server_config_path }}"
+  notify: Restart blynk
 
-- name: Start blynk-server
+- name: Start blynk
   service:
-    name: "{{ blynk-server_service }}"
+    name: "{{ blynk_server_service }}"
     enabled: true
     state: started
+  register: register_blynk_start
+
+- name: Wait for blynk to start after `Start blynk`
+  wait_for:
+    host: 127.0.0.1
+    port: "{{ blynk_server_config_merged['app.ssl.port'] }}"
+  when:
+    - register_blynk_start.changed

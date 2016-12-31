@@ -1,8 +1,42 @@
-blynk-server_user: blynk-server
-blynk-server_group: blynk-server
-blynk-server_log_dir: /var/log/blynk-server
-blynk-server_db_dir: "{{ __blynk-server_db_dir }}"
-blynk-server_service: blynk-server
-blynk-server_conf_dir: "{{ __blynk-server_conf_dir }}"
-blynk-server_conf_file: "{{ __blynk-server_conf_dir }}/blynk-server.conf"
-blynk-server_flags: ""
+blynk_server_user: "{{ __blynk_server_user }}"
+blynk_server_group: "{{ __blynk_server_group }}"
+blynk_server_service: "{{ __blynk_server_service }}"
+blynk_server_bin: "{{ __blynk_server_bin }}"
+blynk_server_home: "{{ blynk_server_bin | dirname }}"
+blynk_server_version: 0.21.1
+blynk_server_version_checksum:
+  0.21.1:
+    sha1: dfe1be1d71723763dad8a75727612d2ed4e1bba3
+    sha256: f7835fa69e0e56b264c121e96c9d6d19eb0f6e694a5ac9168afd3029f19794c0
+blynk_server_dist_url: "https://github.com/blynkkk/blynk-server/releases/download/v{{ blynk_server_version }}/server-{{ blynk_server_version }}.jar"
+
+blynk_server_config_dir: "{{ __blynk_server_config_dir }}"
+
+blynk_server_config_default:
+  server.ssl.cert: ""
+  server.ssl.key: ""
+  server.ssl.key.pass: ""
+  app.ssl.port: 8443
+  hardware.default.port: 8442
+  hardware.ssl.port: 8441
+  https.port: 9443
+  administration.https.port: 7443
+  http.port: 8080
+  ssl.websocket.port: 8081
+  tcp.websocket.port: 8082
+  data.folder: "{{ __blynk_server_data_dir }}"
+  logs.folder: "{{ __blynk_server_log_dir }}"
+  log.level: info
+  enable.raw.data.store: "true"
+blynk_server_config: {}
+blynk_server_config_path: "{{ blynk_server_config_dir }}/server.properties"
+
+blynk_server_mail_properties: {}
+blynk_server_mail_properties_pah: "{{ blynk_server_home }}/mail.properties" # XXX hard-coded
+blynk_server_sms_properties: {}
+blynk_server_sms_properties_path: "{{ blynk_server_home }}/sms.properties" # XXX hard-coded
+
+blynk_server_jvm_options: [] # -Djava.awt.headless=true
+blynk_server_extra_packages: [] # libxrender1
+
+blynk_server_java_home: "{{ __blynk_server_java_home }}"

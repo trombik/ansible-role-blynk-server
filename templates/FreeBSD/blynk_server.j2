@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# Configuration settings for blynk
+#
+# PROVIDE: blynk
+# REQUIRE: DAEMON NETWORKING
+# BEFORE:  LOGIN
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=blynk
+rcvar=blynk_enable
+
+load_rc_config ${name}
+
+: ${blynk_enable="NO"}
+: ${blynk_home="{{ blynk_server_home }}"}
+: ${blynk_config="{{ blynk_server_config_path }}"}
+: ${blynk_log_dir="${blynk_home}/log"}
+: ${blynk_datafolder="${blynk_home}/data"}
+: ${blynk_java_home="{{ blynk_server_java_home }}"}
+: ${blynk_java_opts=""}
+: ${blynk_opts=""}
+: ${blynk_user="{{ blynk_server_user }}"}
+: ${blynk_group="{{ blynk_server_group }}"}
+
+piddir=/var/run/${name}
+pidfile=${piddir}/${name}.pid
+
+start_precmd="blynk_start_precmd"
+status_precmd="find_pid"
+stop_precmd="find_pid"
+
+blynk_cmd="${blynk_home}/server.jar"
+procname="${blynk_java_home}/bin/java"
+
+blynk_args="-dataFolder ${blynk_datafolder} -serverConfig ${blynk_config} ${blynk_opts}"
+
+JAVA_OPTS="${blynk_java_opts}"
+JAVA_HOME="${blynk_java_home}"
+export JAVA_OPTS
+export JAVA_HOME
+
+command_interpreter_execution="{{ blynk_server_java_home }}/bin/java"
+command="/usr/sbin/daemon"
+command_args="-f -p ${pidfile} ${command_interpreter_execution} -jar ${blynk_cmd} ${blynk_args}"
+
+blynk_start_precmd()
+{
+    /usr/bin/install -d -o ${blynk_user} -g ${blynk_group} -m 755 ${piddir}
+}
+
+blynk_stop() {
+    /bin/kill -TERM ${rc_pid}
+    wait_for_pids ${rc_pid}
+}
+
+find_pid()
+{
+    rc_pid=$(check_pidfile $pidfile $command_interpreter_execution)
+}
+
+run_rc_command "$1"

@@ -1,28 +1,47 @@
 require 'spec_helper'
 require 'serverspec'
 
-package = 'blynk-server'
-service = 'blynk-server'
-config  = '/etc/blynk-server/blynk-server.conf'
-user    = 'blynk-server'
-group   = 'blynk-server'
-ports   = [ PORTS ]
-log_dir = '/var/log/blynk-server'
-db_dir  = '/var/lib/blynk-server'
+package = 'blynk'
+service = 'blynk'
+config  = '/etc/blynk/server.properties'
+user    = 'blynk'
+group   = 'blynk'
+ports   = [
+  7443,
+  8080,
+  8081,
+  8082,
+  8441,
+  8442,
+  8443,
+  9443,
+]
+log_dir = '/var/log/blynk'
+db_dir  = '/var/lib/blynk'
+home_dir= "/usr/local/blynk"
+bin     = "#{ home_dir }/server.jar"
 
 case os[:family]
 when 'freebsd'
-  config = '/usr/local/etc/blynk-server.conf'
-  db_dir = '/var/db/blynk-server'
+  config = '/usr/local/etc/blynk/server.properties'
+  db_dir = '/var/db/blynk'
+  user   = "www"
+  group  = "www"
 end
 
-describe package(package) do
-  it { should be_installed }
+describe file(home_dir) do
+  it { should be_directory }
+  it { should be_owned_by user }
+  it { should be_grouped_into group }
 end 
+
+describe file(bin) do
+  it { should be_file }
+  it { should be_mode 755 }
+end
 
 describe file(config) do
   it { should be_file }
-  its(:content) { should match Regexp.escape('blynk-server') }
 end
 
 describe file(log_dir) do
@@ -39,12 +58,14 @@ describe file(db_dir) do
   it { should be_grouped_into group }
 end
 
+=begin
 case os[:family]
 when 'freebsd'
   describe file('/etc/rc.conf.d/blynk-server') do
     it { should be_file }
   end
 end
+=end
 
 describe service(service) do
   it { should be_running }

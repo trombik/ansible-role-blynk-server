@@ -1,6 +1,12 @@
 ---
 
-- name: Restart blynk-server
+- name: Restart blynk
   service:
-    name: blynk-server
+    name: "{{ blynk_server_service }}"
     state: restarted
+  notify: Wait for blynk to start
+
+- name: Wait for blynk to start in handler
+  wait_for:
+    host: 127.0.0.1
+    port: "{{ blynk_server_config_merged ['app.ssl.port'] }}"

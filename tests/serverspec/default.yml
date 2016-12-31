@@ -2,4 +2,3 @@
   roles:
     - ansible-role-blynk-server
   vars:
-    blynk-server_config: ""
