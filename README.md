@@ -58,6 +58,19 @@ blynk_server_config_default:
   allowed.administrator.ips: 127.0.0.1/8
 ```
 
+## Debian
+
+| Variable | Default |
+|----------|---------|
+| `__blynk_server_user` | `www-data` |
+| `__blynk_server_group` | `www-data` |
+| `__blynk_server_service` | `blynk` |
+| `__blynk_server_bin` | `/usr/local/blynk/blynk.jar` |
+| `__blynk_server_config_dir` | `/etc/blynk` |
+| `__blynk_server_data_dir` | `/var/lib/blynk` |
+| `__blynk_server_log_dir` | `/var/log/blynk` |
+| `__blynk_server_java_home` | `/usr/local/openjdk8` |
+
 ## FreeBSD
 
 | Variable | Default |
