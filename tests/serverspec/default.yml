@@ -57,3 +57,10 @@
       Pvz3QLyHb83WUuQxgA==
       -----END ENCRYPTED PRIVATE KEY-----
     blynk_server_tls_pass: password
+    blynk_server_mail_properties:
+      mail.smtp.auth: "true"
+      mail.smtp.starttls.enable: "true"
+      mail.smtp.host: smtp.gmail.com
+      mail.smtp.port: 587
+      mail.smtp.username: username
+      mail.smtp.password: password
