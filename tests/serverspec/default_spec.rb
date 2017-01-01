@@ -32,6 +32,7 @@ end
 config  = "#{ config_dir }/server.properties"
 cert    = "#{ config_dir }/cert.pem"
 key     = "#{ config_dir }/key.pem"
+mail_config = "#{ home_dir }/mail.properties"
 
 describe file(home_dir) do
   it { should be_directory }
@@ -107,4 +108,14 @@ describe command("echo '' | openssl s_client -connect 127.0.0.1:7443") do
 
   its(:stderr) { should match(/^depth=0 C = AU, ST = Some-State, O = Internet Widgits Pty Ltd, CN = localhost$/) }
   its(:stderr) { should match(/^verify error:num=18:self signed certificate$/) }
+end
+
+describe file(mail_config) do
+  it { should be_file }
+  its(:content) { should match(/^mail.smtp.auth=true$/) }
+  its(:content) { should match(/^mail.smtp.starttls.enable=true$/) }
+  its(:content) { should match(/^mail.smtp.host=smtp\.gmail\.com$/) }
+  its(:content) { should match(/^mail.smtp.port=587$/) }
+  its(:content) { should match(/^mail.smtp.username=username$/) }
+  its(:content) { should match(/^mail.smtp.password=password$/) }
 end

@@ -47,6 +47,12 @@
     dest: "{{ blynk_server_config_path }}"
   notify: Restart blynk
 
+- name: Create mail.properties
+  template:
+    src: mail.properties.j2
+    dest: "{{ blynk_server_mail_properties_path }}"
+  notify: Restart blynk
+
 - name: Start blynk
   service:
     name: "{{ blynk_server_service }}"

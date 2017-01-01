@@ -25,8 +25,8 @@ None
 | `blynk_server_config_default` | dict of default configurations | see below |
 | `blynk_server_config` | dict of configurations that overrides `blynk_server_config_default` | `{}` |
 | `blynk_server_config_path` | path to `server.properties` | `{{ blynk_server_config_dir }}/server.properties` |
-| `blynk_server_mail_properties` | NOT implemented | `{}` |
-| `blynk_server_mail_properties_path` NOT implemented | | `{{ blynk_server_home }}/mail.properties` |
+| `blynk_server_mail_properties` | dict of content of `mail.properties` | `{}` |
+| `blynk_server_mail_properties_path` | path to `mail.properties` | `{{ blynk_server_home }}/mail.properties` |
 | `blynk_server_sms_properties` | NOT implemented | `{}` |
 | `blynk_server_sms_properties_path` | NOT implemented | `{{ blynk_server_home }}/sms.properties` |
 | `blynk_server_jvm_options` | NOT implemented | `[]` |
@@ -137,6 +137,13 @@ None
       Pvz3QLyHb83WUuQxgA==
       -----END ENCRYPTED PRIVATE KEY-----
     blynk_server_tls_pass: password
+    blynk_server_mail_properties:
+      mail.smtp.auth: "true"
+      mail.smtp.starttls.enable: "true"
+      mail.smtp.host: smtp.gmail.com
+      mail.smtp.port: 587
+      mail.smtp.username: username
+      mail.smtp.password: password
 ```
 
 # License
