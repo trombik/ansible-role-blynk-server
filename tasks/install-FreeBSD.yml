@@ -27,6 +27,13 @@
     src: FreeBSD/blynk_server.j2
     dest: /usr/local/etc/rc.d/blynk
     mode: 0755
+  notify: Restart blynk
+
+- name: Create rc.conf
+  template:
+    src: FreeBSD/blynk.rc.conf.j2
+    dest: /etc/rc.conf.d/blynk
+  notify: Restart blynk
 
 - name: Install x11/libXrender
   pkgng:
@@ -39,3 +46,4 @@
     dest: "{{ blynk_server_bin }}"
     mode: 0755
     checksum: "sha1:{{ blynk_server_version_checksum[blynk_server_version]['sha1'] }}"
+  notify: Restart blynk

@@ -20,6 +20,7 @@ log_dir = '/var/log/blynk'
 db_dir  = '/var/lib/blynk'
 home_dir= "/usr/local/blynk"
 bin     = "#{ home_dir }/blynk.jar"
+pidfile = "/var/run/blynk.pid"
 
 case os[:family]
 when 'freebsd'
@@ -27,6 +28,7 @@ when 'freebsd'
   db_dir = '/var/db/blynk'
   user   = "www"
   group  = "www"
+  pidfile = "/var/run/blynk/blynk.pid"
 end
 
 config  = "#{ config_dir }/server.properties"
@@ -80,14 +82,28 @@ end
   end
 end
 
-=begin
 case os[:family]
-when 'freebsd'
-  describe file('/etc/rc.conf.d/blynk-server') do
+when "freebsd"
+  describe file("/etc/rc.conf.d/blynk") do
     it { should be_file }
+    its(:content) { should match(/^blynk_java_opts="-Djava\.awt\.headless=true"$/) }
+  end
+
+  describe command("ps -p `cat #{ pidfile }` -ww") do
+    its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
+    its(:stderr) { should match(/^$/) }
+  end
+when "ubuntu"
+  describe file("/etc/default/blynk") do
+    it { should be_file }
+    its(:content) { should match(/^JAVA_OPTS="-Djava\.awt\.headless=true"$/) }
+  end
+
+  describe command("ps --pid `cat #{ pidfile }` -h -o cmd -ww") do
+    its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
+    its(:stderr) { should match(/^$/) }
   end
 end
-=end
 
 describe service(service) do
   it { should be_running }
