@@ -35,6 +35,21 @@ Infrataster::Server.define(
   vagrant: true
 )
 
+# alias "before_each" because the original assumes scheme is always http
+module Infrataster
+  module Contexts
+    class CapybaraContext
+      alias_method :before_each_old, :before_each
+      def before_each(example)
+        before_each_old(example)
+        address, port = server.forward_port(resource.uri.port)
+        scheme = resource.uri.scheme
+        Capybara.app_host = "#{scheme}://#{address}:#{port}"
+      end
+    end
+  end
+end
+
 def fetch(uri_str, limit = 10)
   raise ArgumentError, 'too many HTTP redirects' if limit == 0
   response = Net::HTTP.get_response(URI(uri_str))

@@ -1,5 +1,5 @@
 ---
-- hosts: client
+- hosts: server
   become: yes
   become_method: sudo
   environment:
@@ -9,4 +9,5 @@
 
   pre_tasks:
   roles:
-    - blynk-server
+    - reallyenglish.hosts
+    - ansible-role-blynk-server

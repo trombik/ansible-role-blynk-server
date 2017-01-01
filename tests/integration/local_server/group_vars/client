@@ -1,0 +1,3 @@
+auth_token: foobar
+server_addr: server1
+server_port: 8441
