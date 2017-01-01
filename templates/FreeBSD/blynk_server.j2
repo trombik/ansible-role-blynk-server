@@ -37,14 +37,12 @@ procname="${blynk_java_home}/bin/java"
 
 blynk_args="-dataFolder ${blynk_datafolder} -serverConfig ${blynk_config} ${blynk_opts}"
 
-JAVA_OPTS="${blynk_java_opts}"
 JAVA_HOME="${blynk_java_home}"
-export JAVA_OPTS
 export JAVA_HOME
 
 command_interpreter_execution="{{ blynk_server_java_home }}/bin/java"
 command="/usr/sbin/daemon"
-command_args="-f -p ${pidfile} ${command_interpreter_execution} -jar ${blynk_cmd} ${blynk_args}"
+command_args="-f -p ${pidfile} ${command_interpreter_execution} ${blynk_java_opts} -jar ${blynk_cmd} ${blynk_args}"
 
 blynk_start_precmd()
 {
