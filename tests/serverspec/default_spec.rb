@@ -4,8 +4,8 @@ require 'serverspec'
 package = 'blynk'
 service = 'blynk'
 config_dir = "/etc/blynk"
-user    = 'blynk'
-group   = 'blynk'
+user    = 'www-data'
+group   = 'www-data'
 ports   = [
   7443,
   8080,
@@ -19,7 +19,7 @@ ports   = [
 log_dir = '/var/log/blynk'
 db_dir  = '/var/lib/blynk'
 home_dir= "/usr/local/blynk"
-bin     = "#{ home_dir }/server.jar"
+bin     = "#{ home_dir }/blynk.jar"
 
 case os[:family]
 when 'freebsd'

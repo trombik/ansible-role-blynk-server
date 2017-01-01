@@ -64,3 +64,4 @@
       mail.smtp.port: 587
       mail.smtp.username: username
       mail.smtp.password: password
+    apt_repo_to_add: "{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('16.04', '<') %}[ 'ppa:webupd8team/java' ]{% else %}[]{% endif %}"
