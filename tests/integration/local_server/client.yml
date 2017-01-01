@@ -1,0 +1,29 @@
+---
+- hosts: client
+  become: yes
+  become_method: sudo
+  environment:
+    http_proxy: "{{ http_proxy | default() }}"
+    https_proxy: "{{ https_proxy | default() }}"
+    no_proxy: "{{ no_proxy | default() }}"
+
+  pre_tasks:
+  roles:
+    - reallyenglish.hosts
+  tasks:
+    - name: Install npm
+      pkgng:
+        name: npm
+        state: present
+
+    - name: Install blynk-library
+      npm:
+        name: blynk-library
+        global: yes
+        state: present
+
+    - name: Create test script
+      template:
+        src: simple_client.js.j2
+        dest: /tmp/simple_client.js
+        mode: 0755

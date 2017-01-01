@@ -9,4 +9,5 @@
 
   pre_tasks:
   roles:
-    - blynk-server
+    - reallyenglish.hosts
+    - ansible-role-blynk-server
