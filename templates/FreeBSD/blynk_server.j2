@@ -32,7 +32,7 @@ start_precmd="blynk_start_precmd"
 status_precmd="find_pid"
 stop_precmd="find_pid"
 
-blynk_cmd="${blynk_home}/server.jar"
+blynk_cmd="{{ blynk_server_bin }}"
 procname="${blynk_java_home}/bin/java"
 
 blynk_args="-dataFolder ${blynk_datafolder} -serverConfig ${blynk_config} ${blynk_opts}"

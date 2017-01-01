@@ -36,6 +36,6 @@
 - name: Install blynk server
   get_url:
     url: "{{ blynk_server_dist_url }}"
-    dest: "{{ blynk_server_home }}/server.jar"
+    dest: "{{ blynk_server_bin }}"
     mode: 0755
     checksum: "sha1:{{ blynk_server_version_checksum[blynk_server_version]['sha1'] }}"
