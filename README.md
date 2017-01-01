@@ -29,7 +29,7 @@ None
 | `blynk_server_mail_properties_path` | path to `mail.properties` | `{{ blynk_server_home }}/mail.properties` |
 | `blynk_server_sms_properties` | NOT implemented | `{}` |
 | `blynk_server_sms_properties_path` | NOT implemented | `{{ blynk_server_home }}/sms.properties` |
-| `blynk_server_jvm_options` | NOT implemented | `[]` |
+| `blynk_server_jvm_options` | list of `JAVA_OPTS` | `[]` |
 | `blynk_server_extra_packages` | NOT implemented | `[]` |
 | `blynk_server_java_home` | NOT implemented | `{{ __blynk_server_java_home }}` |
 
