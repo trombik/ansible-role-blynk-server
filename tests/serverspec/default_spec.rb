@@ -34,7 +34,7 @@ end
 config  = "#{ config_dir }/server.properties"
 cert    = "#{ config_dir }/cert.pem"
 key     = "#{ config_dir }/key.pem"
-mail_config = "#{ home_dir }/mail.properties"
+mail_config = "#{ config_dir }/mail.properties"
 
 describe file(home_dir) do
   it { should be_directory }
@@ -91,6 +91,7 @@ when "freebsd"
 
   describe command("ps -p `cat #{ pidfile }` -ww") do
     its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
+    its(:stdout) { should match(/-mailConfig #{ mail_config }/) }
     its(:stderr) { should match(/^$/) }
   end
 when "ubuntu"
@@ -101,6 +102,7 @@ when "ubuntu"
 
   describe command("ps --pid `cat #{ pidfile }` -h -o cmd -ww") do
     its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
+    its(:stdout) { should match(/-mailConfig #{ mail_config }/) }
     its(:stderr) { should match(/^$/) }
   end
 end

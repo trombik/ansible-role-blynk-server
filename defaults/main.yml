@@ -39,9 +39,9 @@ blynk_server_config: {}
 blynk_server_config_path: "{{ blynk_server_config_dir }}/server.properties"
 
 blynk_server_mail_properties: {}
-blynk_server_mail_properties_path: "{{ blynk_server_home }}/mail.properties" # XXX hard-coded
+blynk_server_mail_properties_path: "{{ blynk_server_config_dir }}/mail.properties"
 blynk_server_sms_properties: {}
-blynk_server_sms_properties_path: "{{ blynk_server_home }}/sms.properties" # XXX hard-coded
+blynk_server_sms_properties_path: "{{ blynk_server_config_dir }}/sms.properties"
 
 blynk_server_jvm_options: [] # -Djava.awt.headless=true
 blynk_server_extra_packages: [] # libxrender1

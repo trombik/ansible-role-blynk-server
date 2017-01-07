@@ -17,6 +17,7 @@ load_rc_config ${name}
 : ${blynk_enable="NO"}
 : ${blynk_home="{{ blynk_server_home }}"}
 : ${blynk_config="{{ blynk_server_config_path }}"}
+: ${blynk_mail_config="{{ blynk_server_mail_properties_path }}"}
 : ${blynk_log_dir="${blynk_home}/log"}
 : ${blynk_datafolder="${blynk_home}/data"}
 : ${blynk_java_home="{{ blynk_server_java_home }}"}
@@ -35,7 +36,7 @@ stop_precmd="find_pid"
 blynk_cmd="{{ blynk_server_bin }}"
 procname="${blynk_java_home}/bin/java"
 
-blynk_args="-dataFolder ${blynk_datafolder} -serverConfig ${blynk_config} ${blynk_opts}"
+blynk_args="-dataFolder ${blynk_datafolder} -serverConfig ${blynk_config} -mailConfig ${blynk_mail_config} ${blynk_opts}"
 
 JAVA_HOME="${blynk_java_home}"
 export JAVA_HOME
