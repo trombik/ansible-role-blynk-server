@@ -16,6 +16,9 @@ galaxy_info:
     versions:
     - trusty
     - xenial
+  - name: Debian
+    versions:
+      - 8.6
 #  - name: EL
 #    versions:
 #    - 7
