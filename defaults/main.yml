@@ -3,11 +3,12 @@ blynk_server_group: "{{ __blynk_server_group }}"
 blynk_server_service: "{{ __blynk_server_service }}"
 blynk_server_bin: "{{ __blynk_server_bin }}"
 blynk_server_home: "{{ blynk_server_bin | dirname }}"
-blynk_server_version: 0.21.1
+blynk_server_version: 0.21.4
 blynk_server_version_checksum:
   0.21.1:
     sha1: dfe1be1d71723763dad8a75727612d2ed4e1bba3
-    sha256: f7835fa69e0e56b264c121e96c9d6d19eb0f6e694a5ac9168afd3029f19794c0
+  0.21.4:
+    sha1: 04f87f91920dbe44308118310ae28935b22e4e7d
 blynk_server_dist_url: "https://github.com/blynkkk/blynk-server/releases/download/v{{ blynk_server_version }}/server-{{ blynk_server_version }}.jar"
 
 blynk_server_tls_cert: ""
