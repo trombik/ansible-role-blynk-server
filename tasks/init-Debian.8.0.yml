@@ -1,0 +1,26 @@
+- name: Create sysvinit script
+  # XXX re-use sysvinit script for 14.04 until figuring out how systemd's unit
+  # file works
+  template:
+    src: Ubuntu.14.04/blynk.init.j2
+    dest: /etc/init.d/blynk
+    mode: 0755
+
+- name: Create default for the init script
+  template:
+    src: Ubuntu.14.04/blynk.default.j2
+    dest: /etc/default/blynk
+    mode: 0644
+
+- name: Enable blynk on startup
+  systemd:
+    name: blynk
+    daemon_reload: yes
+    enabled: yes
+
+- name: Copy /run/systemd/generator.late/blynk.service to /etc/systemd/system
+  # XXX systemd in Debian jessie does not work with "is-enabled"
+  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=760616
+  command: cp /run/systemd/generator.late/blynk.service /etc/systemd/system
+  args:
+    creates: /etc/systemd/system/blynk.service
