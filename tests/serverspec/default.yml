@@ -1,22 +1,6 @@
 - hosts: localhost
   roles:
     - ansible-role-blynk-server
-  pre_tasks:
-    - name: Kill autoupdate
-      # `unattended-upgrade` is enabled by default and holds a lock on apt,
-      # which prevents `ansible` to run `apt`. you cannot disable the command
-      # because the command is scheduled to run at boot.
-      #
-      # TODO disable `unattended-upgrade` in the box image
-      # https://github.com/chef/bento/pull/612
-      command: pkill --full /usr/bin/unattended-upgrade
-      become: true
-      register: kill_result
-      failed_when: kill_result.rc > 1
-      changed_when: false
-      when:
-        - ansible_distribution == 'Ubuntu'
-        - ansible_distribution_version | version_compare('16.04', '>=')
   vars:
     blynk_server_config:
       allowed.administrator.ips: 0.0.0.0/0
