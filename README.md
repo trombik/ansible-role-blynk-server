@@ -84,9 +84,35 @@ blynk_server_config_default:
 | `__blynk_server_log_dir` | `/var/log/blynk` |
 | `__blynk_server_java_home` | `/usr/local/openjdk8` |
 
+## OpenBSD
+
+| Variable | Default |
+|----------|---------|
+| `__blynk_server_user` | `www` |
+| `__blynk_server_group` | `www` |
+| `__blynk_server_service` | `blynk` |
+| `__blynk_server_bin` | `/usr/local/blynk/blynk.jar` |
+| `__blynk_server_config_dir` | `/etc/blynk` |
+| `__blynk_server_data_dir` | `/var/db/blynk` |
+| `__blynk_server_log_dir` | `/var/log/blynk` |
+| `__blynk_server_java_home` | `/usr/local/openjdk8` |
+
+## RedHat
+
+| Variable | Default |
+|----------|---------|
+| `__blynk_server_user` | `www-data` |
+| `__blynk_server_group` | `www-data` |
+| `__blynk_server_service` | `blynk` |
+| `__blynk_server_bin` | `/usr/local/blynk/blynk.jar` |
+| `__blynk_server_config_dir` | `/etc/blynk` |
+| `__blynk_server_data_dir` | `/var/lib/blynk` |
+| `__blynk_server_log_dir` | `/var/log/blynk` |
+| `__blynk_server_java_home` | `/usr/local/openjdk8` |
+
 # Dependencies
 
-None
+* reallyenglish.java
 
 # Example Playbook
 
