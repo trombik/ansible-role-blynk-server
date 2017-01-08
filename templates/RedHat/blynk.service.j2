@@ -1,0 +1,10 @@
+[Unit]
+Description=Blynk server
+After=network.target
+
+[Service]
+ExecStart=/bin/java -jar {{ blynk_server_bin }} -serverConfig {{ blynk_server_config_path }} -mailConfig {{ blynk_server_mail_properties_path }} -smsConfig {{ blynk_server_sms_properties_path }}
+Type=simple
+
+[Install]
+WantedBy=default.target
