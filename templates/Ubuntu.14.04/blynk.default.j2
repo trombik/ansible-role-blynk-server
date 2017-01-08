@@ -1,2 +1,2 @@
 JAVA_OPTS="{{ blynk_server_jvm_options | join(' ') }}"
-BLYNK_OPTS="-dataFolder {{ blynk_server_config_merged['data.folder'] }} -serverConfig {{ blynk_server_config_path }} -mailConfig {{ blynk_server_mail_properties_path }}"
+BLYNK_OPTS="-dataFolder {{ blynk_server_config_merged['data.folder'] }} -serverConfig {{ blynk_server_config_path }} -mailConfig {{ blynk_server_mail_properties_path }} -smsConfig {{ blynk_server_sms_properties_path }}"
