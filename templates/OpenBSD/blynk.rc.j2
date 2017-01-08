@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# TODO create a package and use javaPathHelper here
+
+daemon_user="{{ blynk_server_user }}"
+daemon="{{ blynk_server_bin }}"
+daemon_flags="-serverConfig {{ blynk_server_config_path }} -mailConfig {{ blynk_server_mail_properties_path }} -smsConfig {{ blynk_server_sms_properties_path }}"
+daemon_timeout="60"
+
+. /etc/rc.d/rc.subr
+
+pexp="/usr/local/jdk-1.8.0/bin/java -jar ${daemon} ${daemon_flags}"
+
+rc_reload=NO
+
+rc_start() {
+        (${rcexec} "JAVA_HOME=\"/usr/local/jdk-1.8.0\" JAVA_OPTS=\"${JAVA_OPTS} -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true\" /usr/local/jdk-1.8.0/bin/java -jar ${daemon} ${daemon_flags}") &
+}
+
+rc_cmd $1

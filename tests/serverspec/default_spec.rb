@@ -29,6 +29,10 @@ when 'freebsd'
   user   = "www"
   group  = "www"
   pidfile = "/var/run/blynk/blynk.pid"
+when "openbsd"
+  db_dir = '/var/db/blynk'
+  user   = "www"
+  group  = "www"
 end
 
 config  = "#{ config_dir }/server.properties"

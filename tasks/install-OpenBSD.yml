@@ -1,0 +1,44 @@
+---
+
+- name: Create blynk group
+  group:
+    name: "{{ blynk_server_group }}"
+
+- name: Create blynk user
+  user:
+    name: "{{ blynk_server_user }}"
+    groups: "{{ blynk_server_group }}"
+
+- name: Create blynk home dir
+  file:
+    path: "{{ blynk_server_home }}"
+    owner: "{{ blynk_server_user }}"
+    group: "{{ blynk_server_group }}"
+    state: directory
+    mode: 0755
+
+- name: Create config dir
+  file:
+    path: "{{ blynk_server_config_dir }}"
+    state: directory
+
+- name: Create rc.d script
+  template:
+    src: OpenBSD/blynk.rc.j2
+    dest: /etc/rc.d/blynk
+    mode: 0755
+  notify: Restart blynk
+
+#- name: Create rc.conf
+#  template:
+#    src: OpenBSD/blynk.rc.conf.j2
+#    dest: /etc/rc.conf.d/blynk
+#  notify: Restart blynk
+
+- name: Install blynk server
+  get_url:
+    url: "{{ blynk_server_dist_url }}"
+    dest: "{{ blynk_server_bin }}"
+    mode: 0755
+    checksum: "sha1:{{ blynk_server_version_checksum[blynk_server_version]['sha1'] }}"
+  notify: Restart blynk
