@@ -11,6 +11,7 @@
     src: Ubuntu.14.04/blynk.default.j2
     dest: /etc/default/blynk
     mode: 0644
+  notify: Restart blynk
 
 - name: Enable blynk on startup
   systemd:
