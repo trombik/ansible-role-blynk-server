@@ -35,6 +35,7 @@ config  = "#{ config_dir }/server.properties"
 cert    = "#{ config_dir }/cert.pem"
 key     = "#{ config_dir }/key.pem"
 mail_config = "#{ config_dir }/mail.properties"
+sms_config = "#{ config_dir }/sms.properties"
 
 describe file(home_dir) do
   it { should be_directory }
@@ -92,6 +93,7 @@ when "freebsd"
   describe command("ps -p `cat #{ pidfile }` -ww") do
     its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
     its(:stdout) { should match(/-mailConfig #{ mail_config }/) }
+    its(:stdout) { should match(/-smsConfig #{ sms_config }/) }
     its(:stderr) { should match(/^$/) }
   end
 when "ubuntu"
@@ -103,6 +105,7 @@ when "ubuntu"
   describe command("ps --pid `cat #{ pidfile }` -h -o cmd -ww") do
     its(:stdout) { should match(/-Djava\.awt\.headless=true/) }
     its(:stdout) { should match(/-mailConfig #{ mail_config }/) }
+    its(:stdout) { should match(/-smsConfig #{ sms_config }/) }
     its(:stderr) { should match(/^$/) }
   end
 end
@@ -136,4 +139,10 @@ describe file(mail_config) do
   its(:content) { should match(/^mail.smtp.port=587$/) }
   its(:content) { should match(/^mail.smtp.username=username$/) }
   its(:content) { should match(/^mail.smtp.password=password$/) }
+end
+
+describe file(sms_config) do
+  it { should be_file }
+  its(:content) { should match(/^nexmo\.api\.key=foobarbuz$/) }
+  its(:content) { should match(/^nexmo\.api\.secret=secret$/) }
 end

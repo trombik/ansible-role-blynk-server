@@ -27,8 +27,8 @@ None
 | `blynk_server_config_path` | path to `server.properties` | `{{ blynk_server_config_dir }}/server.properties` |
 | `blynk_server_mail_properties` | dict of content of `mail.properties` | `{}` |
 | `blynk_server_mail_properties_path` | path to `mail.properties` | `{{ blynk_server_home }}/mail.properties` |
-| `blynk_server_sms_properties` | NOT implemented | `{}` |
-| `blynk_server_sms_properties_path` | NOT implemented | `{{ blynk_server_home }}/sms.properties` |
+| `blynk_server_sms_properties` | dict of content of `sms.properties` | `{}` |
+| `blynk_server_sms_properties_path` | path to `sms.properties` | `{{ blynk_server_home }}/sms.properties` |
 | `blynk_server_jvm_options` | list of `JAVA_OPTS` | `[]` |
 | `blynk_server_extra_packages` | NOT implemented | `[]` |
 | `blynk_server_java_home` | NOT implemented | `{{ __blynk_server_java_home }}` |
@@ -157,6 +157,12 @@ None
       mail.smtp.port: 587
       mail.smtp.username: username
       mail.smtp.password: password
+    blynk_server_sms_properties:
+      nexmo.api.key: foobarbuz
+      nexmo.api.secret: secret
+    blynk_server_jvm_options:
+      - -Djava.awt.headless=true
+    apt_repo_to_add: "{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('16.04', '<') %}[ 'ppa:webupd8team/java' ]{% else %}[]{% endif %}"
 ```
 
 # License
