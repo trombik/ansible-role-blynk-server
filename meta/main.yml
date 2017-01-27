@@ -18,7 +18,7 @@ galaxy_info:
     - xenial
   - name: Debian
     versions:
-      - 8.6
+    - jessie
   - name: EL
     versions:
     - 7
